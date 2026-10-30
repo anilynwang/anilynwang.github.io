@@ -1,0 +1,32 @@
+# build output
+dist/
+.output/
+.astro/
+
+# dependencies
+node_modules/
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# local validation artifacts and design backups
+tmp/
+.playwright-cli/
+.local-design/
+public/icons/1og-logo.png
+
+# environment variables
+.env
+.env.production
+
+# macOS-specific files
+.DS_Store
+
+# IDE
+.idea
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json

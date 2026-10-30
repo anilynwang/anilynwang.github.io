@@ -1,0 +1,365 @@
+/*!
+ * Markdown Styles
+ * Project: https://github.com/sivan/heti
+ * Source: https://unpkg.com/heti/umd/heti.min.css
+ */
+
+/* Global Styles */
+.heti {
+  --at-apply: 'break-words hyphens-auto cjk:tracking-wide';
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+/* Customized Post Title */
+.heti .post-title {
+  --at-apply: 'mb-2 mt-0 tracking-tight';
+  font-size: 2.25rem;
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+/* Headings */
+.heti :where(h1, h2, h3, h4, h5, h6) {
+  --at-apply: 'mb-4 mt-1.5em scroll-mt-20 font-medium';
+}
+.heti :where(h1) {
+  --at-apply: 'text-7 c-primary';
+}
+.heti :where(h2) {
+  --at-apply: 'text-6 c-primary';
+}
+.heti :where(h3) {
+  --at-apply: 'text-5';
+}
+.heti :where(h4) {
+  --at-apply: 'text-4.5';
+}
+.heti :where(h5) {
+  --at-apply: 'text-4';
+}
+.heti :where(h6) {
+  --at-apply: 'font-normal';
+}
+.heti :where(h1, h2, h3) {
+  --at-apply: 'text-balance leading-1.33em cjk:text-pretty cjk:tracking-wider';
+}
+.heti :where(h2) {
+  line-height: 1.4;
+}
+.heti :where(h3) {
+  line-height: 1.45;
+}
+.heti :where(h1 + h2, h2 + h3, h3 + h4, h4 + h5, h5 + h6) {
+  --at-apply: 'mt-4';
+}
+
+/* Paragraphs */
+.heti :where(p:not(.no-heti):not(.no-heti *)) {
+  --at-apply: 'mb-4 text-pretty cjk:text-justify';
+}
+
+/* Links */
+.heti :where(a:not(.no-heti):not(.no-heti *)) {
+  --at-apply: 'font-medium tracking-normal underline underline-0.075em decoration-secondary/80 underline-offset-0.1em cjk:break-all';
+  --at-apply: 'hover:(c-primary decoration-accent/90) lg:underline-0.1em';
+  transition:
+    color var(--dur-hover) var(--ease-ink),
+    text-decoration-color var(--dur-hover) var(--ease-ink),
+    text-underline-offset var(--dur-hover) var(--ease-ink);
+}
+.heti :where(a:not(.no-heti):not(.no-heti *)):hover {
+  text-underline-offset: 0.2em;
+}
+.heti :where(a:not(.no-heti):not(.no-heti *)):focus-visible {
+  outline: 1px solid oklch(var(--un-preset-theme-colors-accent) / 0.8);
+  outline-offset: 2px;
+}
+
+/* Images */
+.heti :where(img:not(.no-heti):not(.no-heti *)) {
+  --at-apply: 'mx-auto cursor-zoom-in';
+}
+.heti :where(img:not(figure img):not(.no-heti):not(.no-heti *)) {
+  --at-apply: 'my-6';
+}
+.heti :where(figure) {
+  --at-apply: 'my-6 w-full';
+}
+.heti :where(figcaption) {
+  --at-apply: 'mt-2.5 text-center text-sm c-secondary/80';
+}
+.heti :is(h1, h2, h3, h4, h5, h6, img, figure) + :is(img, figure) {
+  --at-apply: 'mt-4';
+}
+.heti :is(img, figure):has(+ :is(img, figure)) {
+  --at-apply: 'mb-4';
+}
+
+/* Code Blocks */
+.heti :where(pre) {
+  --at-apply: 'overflow-auto rounded border border-hairline border-solid px-4 py-3';
+  scrollbar-width: thin;
+  scrollbar-color: oklch(var(--un-preset-theme-colors-secondary) / 0) transparent;
+  transition: scrollbar-color 0.3s ease-out;
+}
+.heti :where(pre:not(.astro-code)) {
+  --at-apply: 'bg-code-bg';
+}
+.heti pre.astro-code {
+  background-color: oklch(var(--un-preset-theme-colors-code-bg) / 1) !important;
+}
+.heti :where(pre):hover {
+  scrollbar-color: oklch(var(--un-preset-theme-colors-secondary) / 0.15) transparent;
+}
+.heti pre code {
+  --at-apply: 'border-none bg-transparent p-0';
+}
+html.dark .heti pre span {
+  --at-apply: 'text-[var(--shiki-dark)]!';
+}
+html.dark .heti pre.astro-code {
+  color: var(--shiki-dark) !important;
+}
+.heti .code-block-wrapper {
+  --at-apply: 'my-6 relative';
+}
+.heti :is(h1, h2, h3, h4, h5, h6, .code-block-wrapper) + .code-block-wrapper {
+  --at-apply: 'mt-4';
+}
+.heti .code-block-wrapper:has(+ .code-block-wrapper) {
+  --at-apply: 'mb-4';
+}
+
+/* Inline Code */
+.heti :where(code) {
+  --at-apply: 'rounded border border-hairline border-solid bg-code-bg px-0.4em py-0.15em text-0.85em tracking-normal cjk:break-all';
+  counter-reset: line;
+}
+.heti code span.line {
+  --at-apply: 'relative pl-8';
+}
+.heti code span.line::before {
+  --at-apply: 'absolute left-0 w-4 c-secondary/40 leading-1.9em';
+  content: counter(line);
+  counter-increment: line;
+  direction: rtl;
+}
+
+/* Blockquotes */
+.heti :where(blockquote) {
+  --at-apply: 'my-6 border-l-2 border-accent border-solid px-4 py-0.5 c-secondary/80';
+}
+.heti blockquote[class*="admonition-"] {
+  --at-apply: 'py-1.5 c-secondary';
+}
+.heti blockquote blockquote {
+  --at-apply: 'py-0';
+}
+.heti blockquote > :first-child {
+  --at-apply: 'mt-0';
+}
+.heti blockquote > :last-child {
+  --at-apply: 'mb-0';
+}
+.heti :is(h1, h2, h3, h4, h5, h6, blockquote) + blockquote {
+  --at-apply: 'mt-4';
+}
+.heti blockquote:has(+ blockquote) {
+  --at-apply: 'mb-4';
+}
+
+/* Tables */
+.heti :where(table) {
+  --at-apply: 'my-6 box-border block max-w-full table-fixed overflow-x-auto';
+  scrollbar-width: thin;
+  scrollbar-color: oklch(var(--un-preset-theme-colors-secondary) / 0) transparent;
+  transition: scrollbar-color 0.3s ease-out;
+}
+.heti :where(table):hover {
+  scrollbar-color: oklch(var(--un-preset-theme-colors-secondary) / 0.15) transparent;
+}
+.heti :where(th, td) {
+  --at-apply: 'border-b border-b-hairline px-3 pb-1.5';
+}
+.heti tr :where(td:first-child, th:first-child) {
+  --at-apply: 'pl-0';
+}
+.heti tr :where(td:last-child, th:last-child) {
+  --at-apply: 'pr-0';
+}
+.heti :where(td) {
+  --at-apply: 'pt-1.5';
+}
+.heti tr:last-child :where(td) {
+  --at-apply: 'border-b-0';
+}
+.heti :is(h1, h2, h3, h4, h5, h6, table) + table {
+  --at-apply: 'mt-4';
+}
+.heti table:has(+ table) {
+  --at-apply: 'mb-4';
+}
+
+/* Lists */
+.heti :where(ul, ol) {
+  --at-apply: 'my-6 pl-2em';
+}
+.heti :where(ul, ol) :where(ul, ol) {
+  --at-apply: 'mb-0.25em mt-0';
+}
+.heti :where(ul) {
+  --at-apply: 'list-disc';
+}
+.heti :where(ol) {
+  --at-apply: 'list-decimal';
+}
+.heti :where(ul, ol) :where(ul) {
+  --at-apply: 'list-circle';
+}
+.heti :where(ul, ol) :where(ul, ol) :where(ul) {
+  --at-apply: 'list-square';
+}
+.heti :where(li) {
+  --at-apply: 'mt-0.25em list-unset';
+}
+.heti :is(h1, h2, h3, h4, h5, h6, ul, ol) + :is(ul, ol) {
+  --at-apply: 'mt-4';
+}
+.heti :is(ul, ol):has(+ :is(ul, ol)) {
+  --at-apply: 'mb-4';
+}
+
+/* Superscript and Subscript >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
+.heti :where(sub, sup) {
+  --at-apply: 'relative mx-0.1em align-baseline text-0.75em';
+}
+.heti :where(sub) {
+  --at-apply: 'bottom--0.25em';
+}
+.heti :where(sup) {
+  --at-apply: 'top--0.5em';
+}
+
+/* Abbreviations */
+.heti :where(abbr[title]) {
+  --at-apply: 'cursor-help border-b-1 border-secondary border-dotted pb-0.25 no-underline';
+}
+
+/* Wavy Underline */
+.heti :where(u) {
+  --at-apply: 'underline decoration-red-400 underline-offset-0.25em decoration-wavy';
+}
+html.dark .heti :where(u) {
+  --at-apply: 'decoration-red-400/60';
+}
+
+/* Keyboard Input */
+.heti :where(kbd) {
+  --at-apply: 'inline-block px-0.4em py-0.3em text-0.85em font-bold leading-none tracking-normal';
+  --at-apply: 'uno-round-border border-secondary/40 c-secondary';
+}
+
+/* Highlighted Text */
+.heti :where(mark) {
+  --at-apply: 'bg-highlight py-0.65 text-inherit';
+}
+
+/* Footnotes */
+.heti :where(sub, sup) :where(a) {
+  --at-apply: 'no-underline';
+}
+.heti :where(sup):target,
+.heti :where(sup) a:target {
+  --at-apply: 'bg-highlight';
+}
+.heti .data-footnote-backref {
+  --at-apply: 'font-serif no-underline';
+}
+
+/* Sidenotes & Footnote Cards (Sidenotes.astro) */
+#post-content {
+  position: relative;
+}
+.heti a[data-footnote-ref] {
+  transition: color var(--dur-hover) var(--ease-ink), background-color var(--dur-hover) var(--ease-ink);
+}
+.heti a[data-footnote-ref].is-active {
+  --at-apply: 'bg-highlight';
+  color: oklch(var(--un-preset-theme-colors-accent) / 1);
+}
+.heti :is(.sidenote, .footnote-card) {
+  --at-apply: 'absolute flex gap-2 text-3.25 cjk:tracking-normal';
+  line-height: 1.7;
+  color: var(--ink-light);
+}
+.heti .sidenote {
+  left: calc(100% + 2.5rem);
+  transition: color var(--dur-hover) var(--ease-ink);
+}
+.heti .sidenote.is-active {
+  color: var(--ink-very-dark);
+}
+.heti .footnote-card {
+  --at-apply: 'z-50 rounded bg-background px-4 py-3 border border-hairline border-solid';
+  box-shadow: 0 0.5rem 1.5rem -1rem oklch(0.2 0.01 95 / 0.35);
+  animation: ink-in 0.45s var(--ease-ink) both;
+}
+html.reduce-motion .heti .footnote-card {
+  animation: none;
+}
+.heti .sidenote-num {
+  --at-apply: 'shrink-0 font-time';
+  color: oklch(var(--un-preset-theme-colors-accent) / 0.85);
+}
+.heti .sidenote-body > :where(p, ul, ol) {
+  --at-apply: 'm-0';
+}
+.heti .sidenote-body :where(a) {
+  --at-apply: 'font-normal';
+}
+/* When notes live in the margin, the list at the end is redundant on screen. */
+html.sidenotes-on .heti section[data-footnotes] {
+  display: none;
+}
+@media print {
+  .heti :is(.sidenote, .footnote-card) {
+    display: none !important;
+  }
+  html.sidenotes-on .heti section[data-footnotes] {
+    display: block !important;
+  }
+}
+
+/* Horizontal Rules */
+.heti :where(hr) {
+  --at-apply: 'relative mb-10.5 mt-14.5 h-1 border-0 text-center';
+}
+.heti :where(hr)::before {
+  content: none;
+}
+.heti :where(hr)::after {
+  --at-apply: 'absolute left-1/4 top-1/2 h-0.25 w-1/2 bg-hairline';
+  content: '';
+}
+
+/* Bold */
+.heti :where(b, strong) {
+  --at-apply: 'font-semibold';
+}
+
+/* Italic */
+.heti :where(em) {
+  --at-apply: 'italic';
+}
+
+/* Cite */
+.heti :where(cite) {
+  --at-apply: 'cjk:not-italic';
+}
+
+/* Quotes */
+.heti :where(q:is(:lang(zh), :lang(ja), :lang(ko))) {
+  quotes: "「" "」" "『" "』";
+}
