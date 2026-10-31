@@ -4,6 +4,10 @@
 
 ## 添加文章
 
+推荐打开网站的 `/write/` 页面，使用 GitHub 账户进入 Pages CMS 编辑器。首次使用需要安装 Pages CMS GitHub App，并只授权 `anilynwang.github.io` 仓库。编辑器可新建文章，修改标题、正文、发布日期，也可把文章存为草稿。保存后，GitHub Actions 会自动重新发布网站。已有文章的「固定网址标识」请保持原值，以免旧链接失效。
+
+也可以直接编辑 Markdown 文件：
+
 在 `src/content/posts/` 中新建一个 Markdown 文件，例如 `雨夜.md`：
 
 ```md

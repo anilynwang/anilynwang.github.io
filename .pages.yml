@@ -1,0 +1,71 @@
+media:
+  - name: article_images
+    label: 文章图片
+    input: public/images
+    output: /images
+
+content:
+  - name: posts
+    label: 文章
+    type: collection
+    path: src/content/posts
+    format: yaml-frontmatter
+    filename:
+      template: "{year}-{month}-{day}-{hour}-{minute}-{second}.md"
+      field: false
+    view:
+      fields: [title, published, draft]
+      primary: title
+      sort: [published, title]
+      search: [title, body]
+      default:
+        sort: published
+        order: desc
+    fields:
+      - name: title
+        label: 标题
+        type: string
+        required: true
+      - name: published
+        label: 发布日期
+        type: date
+        required: true
+        options:
+          format: yyyy-MM-dd
+      - name: updated
+        label: 修改日期（选填）
+        type: date
+        default: ""
+        options:
+          format: yyyy-MM-dd
+      - name: description
+        label: 摘要（选填）
+        type: text
+      - name: tags
+        label: 标签（选填）
+        type: string
+        list: true
+      - name: draft
+        label: 保存为草稿，不公开
+        type: boolean
+        default: false
+      - name: lang
+        label: 语言
+        type: select
+        default: zh
+        options:
+          values:
+            - name: zh
+              label: 中文
+      - name: abbrlink
+        label: 固定网址标识（选填）
+        type: string
+        description: 已有文章请保持原值，修改会改变网址。新文章留空即可。
+        pattern: "^[a-z0-9-]*$"
+      - name: body
+        label: 正文
+        type: rich-text
+        required: true
+        options:
+          media: article_images
+          switcher: true
