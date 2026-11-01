@@ -35,20 +35,20 @@ export const { getStaticPaths, GET } = await OGImageRoute({
     },
     font: {
       title: {
-        families: ['Source Han Sans CN'],
+        families: ['Source Han Serif CN'],
         weight: 'Bold',
         color: [34, 33, 36],
         lineHeight: 1.5,
       },
       description: {
-        families: ['Source Han Sans CN'],
+        families: ['Source Han Serif CN'],
         color: [72, 71, 74],
         lineHeight: 1.5,
       },
     },
     fonts: [
-      './assets/fonts/SourceHanSansCN-Bold.otf',
-      './assets/fonts/SourceHanSansCN-Regular.otf',
+      './assets/fonts/SourceHanSerifCN-Bold.otf',
+      './assets/fonts/SourceHanSerifCN-Regular.otf',
     ],
     bgGradient: [[242, 241, 245]],
   }),

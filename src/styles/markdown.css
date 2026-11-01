@@ -6,10 +6,10 @@
 
 /* Global Styles */
 .heti {
-  --at-apply: 'break-words hyphens-auto';
-  font-size: 1rem;
+  --at-apply: 'break-words hyphens-auto cjk:tracking-wide';
+  font-size: 1.125rem;
   font-weight: 400;
-  line-height: 1.5;
+  line-height: 1.85;
 }
 
 /* Customized Post Title */
@@ -43,7 +43,7 @@
   --at-apply: 'font-normal';
 }
 .heti :where(h1, h2, h3) {
-  --at-apply: 'text-balance leading-1.33em cjk:text-pretty';
+  --at-apply: 'text-balance leading-1.33em cjk:text-pretty cjk:tracking-wider';
 }
 .heti :where(h2) {
   line-height: 1.4;
@@ -57,7 +57,12 @@
 
 /* Paragraphs */
 .heti :where(p:not(.no-heti):not(.no-heti *)) {
-  --at-apply: 'mb-4 text-pretty';
+  --at-apply: 'mb-4 text-pretty cjk:text-justify';
+}
+
+/* Indent prose paragraphs without changing the article text. */
+#post-content > p:not(:has(img, picture, video)) {
+  text-indent: 2em;
 }
 
 /* Links */

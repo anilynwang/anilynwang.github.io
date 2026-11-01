@@ -3,7 +3,7 @@ html {
   scrollbar-width: thin;
   scrollbar-color: oklch(var(--un-preset-theme-colors-secondary) / 0.25) transparent;
   scrollbar-gutter: stable;
-  text-autospace: normal;
+  text-autospace: ideograph-alpha ideograph-numeric;
 
   /* Low-interference washi fallback: black fibers, no fixed overlay or DOM layer. */
   background-image:

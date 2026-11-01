@@ -49,11 +49,11 @@ export default defineConfig({
       'caution': 'oklch(50.5% 0.213 27.518 / 0.8)', // red-700
     },
     fontFamily: {
-      title: ['Source Han Sans CN', 'Noto Sans CJK SC', 'sans-serif'],
-      navbar: ['Source Han Sans CN', 'Noto Sans CJK SC', 'sans-serif'],
-      time: ['Source Han Sans CN', 'Noto Sans CJK SC', 'sans-serif'],
-      sans: ['Source Han Sans CN', 'Noto Sans CJK SC', 'sans-serif'],
-      serif: ['Source Han Sans CN', 'Noto Sans CJK SC', 'sans-serif'],
+      title: ['Source Han Serif CN', 'Noto Serif CJK SC', 'Songti SC', 'serif'],
+      navbar: ['Source Han Serif CN', 'Noto Serif CJK SC', 'Songti SC', 'serif'],
+      time: ['Source Han Serif CN', 'Noto Serif CJK SC', 'Songti SC', 'serif'],
+      sans: ['Source Han Serif CN', 'Noto Serif CJK SC', 'Songti SC', 'serif'],
+      serif: ['Source Han Serif CN', 'Noto Serif CJK SC', 'Songti SC', 'serif'],
     },
   },
   rules: [
