@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
-  <title id="title">野球鹿</title>
+  <title id="title">野秋鹿</title>
   <rect width="64" height="64" fill="#f5f1e9"/>
   <path d="M16 14c2 8 7 12 16 15 9-3 14-7 16-15M19 22l-7-2m33 2 7-2M32 29v20m-11-9c2 8 8 12 11 12s9-4 11-12" fill="none" stroke="#2d2926" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
   <circle cx="32" cy="38" r="4" fill="#a6473c"/>

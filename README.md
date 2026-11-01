@@ -1,4 +1,4 @@
-# 野球鹿
+# 野秋鹿
 
 个人文学博客，基于 [Interleaf](https://github.com/DRAG0NM/astro-theme-interleaf) 构建，使用 GitHub Pages 发布。
 
@@ -40,4 +40,4 @@ pnpm dev
 
 ## 主题与许可
 
-网站代码基于 Interleaf，保留其 [MIT 许可](LICENSE)与 [NOTICE](NOTICE.md)。文章版权归各自作者所有。
+网站代码基于 Interleaf，保留其 [MIT 许可](LICENSE)与 [NOTICE](NOTICE.md)。网页使用 Adobe 开源的思源黑体，许可见 `public/fonts/SourceHanSansCN-LICENSE.txt`。文章版权归各自作者所有。
