@@ -32,6 +32,15 @@ content:
         required: true
         options:
           format: yyyy-MM-dd
+      - name: author
+        label: 署名
+        type: string
+        description: 作品实际作者或笔名；留空显示未署名。
+      - name: genre
+        label: 文体
+        type: select
+        options:
+          values: [散文, 随笔, 小说, 诗歌, 评论, 书信, 日记, 其他]
       - name: updated
         label: 修改日期（选填）
         type: date

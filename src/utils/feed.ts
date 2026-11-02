@@ -185,7 +185,7 @@ export async function generateFeed({ lang }: { lang?: Language } = {}) {
       description: getPostDescription(post, 'feed'),
       content: postContent,
       author: [{
-        name: author,
+        name: post.data.author || '未署名',
         link: `${url}${base}/`,
       }],
       published: publishDate,

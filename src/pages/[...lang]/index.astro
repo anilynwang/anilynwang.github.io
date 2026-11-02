@@ -1,42 +1,12 @@
 ---
-import PostList from '@/components/PostList.astro'
+import ArticleExplorer from '@/components/ArticleExplorer.astro'
 import { allLocales } from '@/config'
 import { getLangFromLocale, getLangRouteParam } from '@/i18n/lang'
 import Layout from '@/layouts/Layout.astro'
-import { getPinnedPosts, getPostsByYear } from '@/utils/content'
 
 export async function getStaticPaths() {
-  return allLocales.map(lang => ({
-    params: { lang: getLangRouteParam(lang) },
-  }))
+  return allLocales.map(lang => ({ params: { lang: getLangRouteParam(lang) } }))
 }
-
 const currentLang = getLangFromLocale(Astro.currentLocale)
-const pinnedPosts = await getPinnedPosts(currentLang)
-const postsByYear = await getPostsByYear(currentLang)
 ---
-
-<Layout>
-  {pinnedPosts.length === 0 && postsByYear.size === 0 && (
-    <section class="heti mt-12 max-w-120 text-4.25 c-secondary leading-2">
-      <div class="mb-8 uno-decorative-line" />
-      <p>作品正在整理中。</p>
-      <p class="mt-4">这里将陆续收录散文、诗与故事。愿每一次相遇，都从一段安静的阅读开始。</p>
-    </section>
-  )}
-  <!-- Pinned Posts -->
-  {pinnedPosts.length > 0 && (
-    <section class="archive-section">
-      <p class="archive-year">置顶</p>
-      <PostList posts={pinnedPosts} lang={currentLang} pinned={true} />
-    </section>
-  )}
-
-  <!-- Regular Posts -->
-  {Array.from(postsByYear.entries(), ([year, posts]) => (
-    <section class="archive-section">
-      <p class="archive-year">{year}</p>
-      <PostList posts={posts} lang={currentLang} />
-    </section>
-  ))}
-</Layout>
+<Layout><ArticleExplorer lang={currentLang} newspaper /></Layout>
