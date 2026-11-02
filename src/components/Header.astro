@@ -1,61 +1,28 @@
 ---
 import { themeConfig } from '@/config'
-import { ui } from '@/i18n/ui'
 import { getPageInfo } from '@/utils/page'
 
-const { currentLang, getLocalizedPath, isPost } = getPageInfo(Astro.url.pathname)
-const { title, subtitle, i18nTitle } = themeConfig.site
-
-const currentUI = ui[currentLang as keyof typeof ui] ?? {}
-const headerTitle = i18nTitle ? currentUI.title : title
-const headerSubtitle = i18nTitle ? currentUI.subtitle : subtitle
-
-const TitleTag = isPost ? 'h2' : 'h1'
-const SubtitleTag = isPost ? 'div' : 'h2'
+const { isHome, getLocalizedPath } = getPageInfo(Astro.url.pathname)
+const { title, subtitle } = themeConfig.site
 ---
-
-<header
-  class:list={[
-    'lg:(uno-desktop-column top-21)',
-    isPost
-    ? 'mb-8.5'
-    : 'mb-8',
-  ]}
->
-  <TitleTag
-    class:list={[
-      'font-bold font-title',
-      isPost
-        ? `mb-2.8 mt-3 text-5.375 c-secondary lg:(mb-1.8 mt-0 text-9 c-primary)`
-        : `mb-1.8 w-75% text-8 c-primary lg:(w-full text-9)`,
-    ]}
-  >
-    <!-- Fix text cropping issues during view transition on iOS by adding a div tag -->
-      <div
-        class="box-content inline-block pr-1"
-        transition:name={`site-title-${currentLang}`}
-        data-disable-theme-toggle-transition
-      >
-      <a
-        id="site-title-link"
-        href={getLocalizedPath('/')}
-      >
-          {headerTitle}
-      </a>
-    </div>
-  </TitleTag>
-
-  {headerSubtitle && (
-    <SubtitleTag
-      class:list={[
-        'text-3.5 c-secondary font-navbar lg:text-4',
-        isPost
-        ? `op-0 lg:op-100`
-        : 'w-75% lg:w-full',
-      ]}
-      aria-hidden={isPost}
-    >
-      {headerSubtitle}
-    </SubtitleTag>
+<header class:list={[isHome ? 'paper-masthead' : 'reading-masthead lg:(uno-desktop-column top-21) mb-10']}>
+  {isHome
+? (
+    <>
+      <div class="masthead-utility"><span>一纸文学 · 一隅日常</span><a class="about-button" href={getLocalizedPath('/about/')}>关于野秋鹿 <span aria-hidden="true">↗</span></a></div>
+      <div class="masthead-face">
+        <span class="masthead-side" aria-hidden="true">文字有间<br />读来无距</span>
+        <div class="masthead-center"><p class="masthead-eyebrow">THE LITERARY JOURNAL</p><h1><a id="site-title-link" href={getLocalizedPath('/')}>{title}</a></h1><p class="masthead-subtitle">{subtitle}</p></div>
+        <span class="masthead-seal" aria-hidden="true">野<br />秋</span>
+      </div>
+      <div class="masthead-bottom"><span>散文 · 诗歌 · 故事</span><span>把日子，慢慢写成文字。</span></div>
+    </>
+  )
+: (
+    <>
+      <a id="site-title-link" class="reading-brand" href={getLocalizedPath('/')}>{title}</a>
+      <p class="reading-subtitle">{subtitle}</p>
+      <a class="about-button reading-about" href={getLocalizedPath('/about/')}>关于 <span aria-hidden="true">↗</span></a>
+    </>
   )}
 </header>

@@ -389,3 +389,25 @@ html.reduce-motion {
     --at-apply: 'transition-inherit';
   }
 }
+
+@keyframes paper-arrive {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: no-preference) {
+ html:not(.reduce-motion) .masthead-center { animation: paper-arrive .85s var(--ease-ink) both; }
+ html:not(.reduce-motion) .masthead-seal { animation: stamp-press .85s var(--ease-ink) both; }
+ html:not(.reduce-motion) .paper-story:nth-child(-n+6) { animation: paper-arrive .7s var(--ease-ink) backwards; animation-delay: .12s; }
+ html:not(.reduce-motion) .paper-story:nth-child(2) { animation-delay: .18s; }
+ html:not(.reduce-motion) .paper-story:nth-child(3) { animation-delay: .24s; }
+ html:not(.reduce-motion) .article-calendar:not([hidden]) { animation: paper-arrive .35s var(--ease-ink) both; }
+}
+@media (prefers-reduced-motion: reduce) {
+ .paper-story, .about-button, .story-read span, .paper-story::before { transition: none; }
+ .paper-story:hover, .about-button:hover { transform: none; }
+}
+
+@keyframes stamp-press {
+ from { opacity: 0; transform: rotate(9deg) scale(1.15); }
+ to { opacity: 1; transform: rotate(5deg) scale(1); }
+}

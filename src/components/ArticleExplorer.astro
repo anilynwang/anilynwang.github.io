@@ -13,7 +13,7 @@ const tags = [...new Set(posts.flatMap(p => p.data.tags))].sort()
 ---
 <section class:list={['article-explorer', { newspaper }]} data-explorer>
   <header class="edition-heading">
-    <div><p class="edition-kicker">野秋鹿 · 文学与生活</p><h1>{newspaper ? '落纸之间' : '作品索引'}</h1></div>
+    <div><p class="edition-kicker">野秋鹿 · 文学与生活</p><h2>{newspaper ? '落纸之间' : '作品索引'}</h2></div>
     <p class="edition-note">{newspaper ? '写下所见，留住所感。' : '按署名、文体、标签与日期，寻找一篇文字。'}<br />共 {posts.length} 篇文字</p>
   </header>
   <form class="explorer-tools" role="search" onsubmit="return false">
@@ -130,6 +130,11 @@ function setupExplorers() {
         month.value = `${next.getFullYear()}-${String(next.getMonth() + 1).padStart(2, '0')}`
         drawCalendar()
       })
+    }
+    const initialTag = new URLSearchParams(window.location.search).get('tag')
+    if (initialTag && [...(control('tag') as HTMLSelectElement).options].some(o => o.value === initialTag)) {
+      control('tag').value = initialTag
+      apply()
     }
     drawCalendar()
   })
