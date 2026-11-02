@@ -39,11 +39,12 @@ const tags = [...new Set(posts.flatMap(p => p.data.tags))].sort()
       const genre = post.data.genre || '未分类'
       return (
 <article class="paper-story" data-story data-date={date} data-author={author} data-genre={genre} data-tags={JSON.stringify(post.data.tags)} data-search={[post.data.title, author, genre, ...post.data.tags, post.body || ''].join(' ').toLocaleLowerCase()}>
+        <a class="story-link" href={getPostPath(post.data.abbrlink || post.id, lang)} aria-labelledby={`story-title-${i}`}>
         <div class="story-section"><span>{genre}</span><span>{String(i + 1).padStart(2, '0')}</span></div>
-        <h2><a href={getPostPath(post.data.abbrlink || post.id, lang)}>{post.data.title}</a></h2>
+        <h2 id={`story-title-${i}`}>{post.data.title}</h2>
         <p class="story-byline">{author} <span>／</span> <time datetime={date}>{date}</time></p>
         <p class="story-excerpt">{getPostDescription(post, 'list')}</p>
-        <a class="story-read" href={getPostPath(post.data.abbrlink || post.id, lang)}>阅读全文 <span aria-hidden="true">↗</span></a>
+        </a>
       </article>
 )
     })}
