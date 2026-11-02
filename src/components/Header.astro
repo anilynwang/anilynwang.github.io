@@ -9,13 +9,10 @@ const { title, subtitle } = themeConfig.site
   {isHome
 ? (
     <>
-      <div class="masthead-utility"><span>一纸文学 · 一隅日常</span><a class="about-button" href={getLocalizedPath('/about/')}>关于野秋鹿 <span aria-hidden="true">↗</span></a></div>
+      <div class="masthead-utility"><a class="about-button" href={getLocalizedPath('/about/')}>关于 <span aria-hidden="true">↗</span></a></div>
       <div class="masthead-face">
-        <span class="masthead-side" aria-hidden="true">文字有间<br />读来无距</span>
-        <div class="masthead-center"><p class="masthead-eyebrow">THE LITERARY JOURNAL</p><h1><a id="site-title-link" href={getLocalizedPath('/')}>{title}</a></h1><p class="masthead-subtitle">{subtitle}</p></div>
-        <span class="masthead-seal" aria-hidden="true">野<br />秋</span>
+        <div class="masthead-center"><h1><a id="site-title-link" href={getLocalizedPath('/')}>{title}</a></h1><p class="masthead-subtitle">{subtitle}</p></div>
       </div>
-      <div class="masthead-bottom"><span>散文 · 诗歌 · 故事</span><span>把日子，慢慢写成文字。</span></div>
     </>
   )
 : (

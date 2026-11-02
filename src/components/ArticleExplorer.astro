@@ -12,10 +12,11 @@ const genres = [...new Set(posts.map(p => p.data.genre || '未分类'))].sort()
 const tags = [...new Set(posts.flatMap(p => p.data.tags))].sort()
 ---
 <section class:list={['article-explorer', { newspaper }]} data-explorer>
-  <header class="edition-heading">
-    <div><p class="edition-kicker">野秋鹿 · 文学与生活</p><h2>{newspaper ? '落纸之间' : '作品索引'}</h2></div>
-    <p class="edition-note">{newspaper ? '写下所见，留住所感。' : '按署名、文体、标签与日期，寻找一篇文字。'}<br />共 {posts.length} 篇文字</p>
-  </header>
+  {!newspaper && (
+    <header class="edition-heading">
+      <h2>作品索引</h2>
+    </header>
+  )}
   <form class="explorer-tools" role="search" onsubmit="return false">
     <label class="explorer-search">搜索文章<input type="search" name="query" placeholder="标题、正文、署名…" autocomplete="off" /></label>
     <label>署名<select name="author"><option value="">全部署名</option>{authors.map(a => <option value={a}>{a}</option>)}</select></label>
