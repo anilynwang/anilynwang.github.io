@@ -18,6 +18,7 @@ const posts = defineCollection({
     tags: z.array(z.string()).optional().default([]),
     author: z.string().optional().default(''),
     genre: z.string().optional().default(''),
+    recommended: z.boolean().optional().default(false),
     // Advanced
     draft: z.boolean().optional().default(false),
     pin: z.number().int().min(0).max(99).optional().default(0),

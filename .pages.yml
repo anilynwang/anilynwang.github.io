@@ -14,7 +14,7 @@ content:
       template: "{year}-{month}-{day}-{hour}-{minute}-{second}.md"
       field: false
     view:
-      fields: [title, published, draft]
+      fields: [title, recommended, published, draft]
       primary: title
       sort: [published, title]
       search: [title, body]
@@ -36,6 +36,11 @@ content:
         label: 署名
         type: string
         description: 作品实际作者或笔名；留空显示未署名。
+      - name: recommended
+        label: 作者推荐
+        type: boolean
+        default: false
+        description: 开启后排在首页最前面；多篇推荐文章按发布日期从新到旧排列。
       - name: genre
         label: 文体
         type: select

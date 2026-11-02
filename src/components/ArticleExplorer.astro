@@ -6,7 +6,10 @@ import { getPostDescription } from '@/utils/description'
 
 interface Props { lang: Language, newspaper?: boolean }
 const { lang, newspaper = false } = Astro.props
-const posts = await getPosts(lang)
+const posts = [...await getPosts(lang)].sort((a, b) =>
+  Number(b.data.recommended) - Number(a.data.recommended)
+  || b.data.published.valueOf() - a.data.published.valueOf(),
+)
 const authors = [...new Set(posts.map(p => p.data.author || '未署名'))].sort()
 const genres = [...new Set(posts.map(p => p.data.genre || '未分类'))].sort()
 const tags = [...new Set(posts.flatMap(p => p.data.tags))].sort()
@@ -22,15 +25,18 @@ const tags = [...new Set(posts.flatMap(p => p.data.tags))].sort()
     <label>署名<select name="author"><option value="">全部署名</option>{authors.map(a => <option value={a}>{a}</option>)}</select></label>
     <label>文体<select name="genre"><option value="">全部文体</option>{genres.map(g => <option value={g}>{g}</option>)}</select></label>
     <label>标签<select name="tag"><option value="">全部标签</option>{tags.map(t => <option value={t}>{t}</option>)}</select></label>
-    <button type="button" data-calendar-toggle aria-expanded="false" aria-controls="article-calendar">按日历查阅</button>
+    <button type="button" data-calendar-toggle aria-expanded="false" aria-controls="article-calendar" aria-haspopup="dialog">按日历查阅</button>
     <button type="reset">重置</button>
   </form>
-  <div id="article-calendar" class="article-calendar" hidden>
-    <div class="calendar-toolbar"><button type="button" data-prev aria-label="上个月">←</button><label>查阅月份<input type="month" data-month /></label><button type="button" data-next aria-label="下个月">→</button><button type="button" data-clear-date>全部日期</button></div>
-    <p class="calendar-help">带圆点的日期有文章，点击日期筛选。</p>
+  <dialog id="article-calendar" class="article-calendar" aria-labelledby="calendar-heading">
+    <div class="calendar-binding" aria-hidden="true"><span></span><span></span></div>
+    <div class="calendar-heading"><div><p class="calendar-eyebrow">文字存档</p><h2 id="calendar-heading">翻一页日历</h2></div><button type="button" data-close-calendar aria-label="关闭日历">×</button></div>
+    <div class="calendar-toolbar"><button type="button" data-prev aria-label="上个月">←</button><label>查阅月份<input type="month" data-month /></label><button type="button" data-next aria-label="下个月">→</button></div>
+    <p class="calendar-help">带圆点的日期有文章，选择日期查阅。</p>
     <div class="calendar-week" aria-hidden="true">{['一', '二', '三', '四', '五', '六', '日'].map(d => <span>{d}</span>)}</div>
     <div class="calendar-days" data-days></div>
-  </div>
+    <div class="calendar-footer"><span data-calendar-selection>尚未限定日期</span><button type="button" data-clear-date>全部日期</button></div>
+  </dialog>
   <p class="explorer-status" role="status" aria-live="polite" data-status>全部作品 · {posts.length} 篇</p>
   <div class="newspaper-grid">
     {posts.map((post, i) => {
@@ -40,7 +46,7 @@ const tags = [...new Set(posts.flatMap(p => p.data.tags))].sort()
       return (
 <article class="paper-story" data-story data-date={date} data-author={author} data-genre={genre} data-tags={JSON.stringify(post.data.tags)} data-search={[post.data.title, author, genre, ...post.data.tags, post.body || ''].join(' ').toLocaleLowerCase()}>
         <a class="story-link" href={getPostPath(post.data.abbrlink || post.id, lang)} aria-labelledby={`story-title-${i}`}>
-        <div class="story-section"><span>{genre}</span><span>{String(i + 1).padStart(2, '0')}</span></div>
+        <div class="story-section"><span>{post.data.recommended ? <span class="recommend-mark">作者推荐</span> : genre}</span><span>{String(i + 1).padStart(2, '0')}</span></div>
         <h2 id={`story-title-${i}`}>{post.data.title}</h2>
         <p class="story-byline">{author} <span>／</span> <time datetime={date}>{date}</time></p>
         <p class="story-excerpt">{getPostDescription(post, 'list')}</p>
@@ -59,13 +65,16 @@ function setupExplorers() {
     root.dataset.ready = 'true'
     const form = root.querySelector<HTMLFormElement>('form')!
     const stories = [...root.querySelectorAll<HTMLElement>('[data-story]')]
-    const calendar = root.querySelector<HTMLElement>('.article-calendar')!
+    const calendar = root.querySelector<HTMLDialogElement>('.article-calendar')!
     const toggle = root.querySelector<HTMLButtonElement>('[data-calendar-toggle]')!
     const month = root.querySelector<HTMLInputElement>('[data-month]')!
     const days = root.querySelector<HTMLElement>('[data-days]')!
     let selectedDate = ''
-    month.value = stories[0]?.dataset.date?.slice(0, 7) || new Date().toISOString().slice(0, 7)
+    month.value = stories.map(s => s.dataset.date!).sort().at(-1)?.slice(0, 7) || new Date().toISOString().slice(0, 7)
     const control = (name: string) => form.elements.namedItem(name) as HTMLInputElement | HTMLSelectElement
+    function closeCalendar() {
+      calendar.close()
+    }
     function apply() {
       const terms = control('query').value.trim().toLocaleLowerCase().split(/\s+/).filter(Boolean)
       let count = 0
@@ -79,6 +88,8 @@ function setupExplorers() {
         if (matches)
           count++
       }
+      toggle.textContent = selectedDate || '按日历查阅'
+      root.querySelector('[data-calendar-selection]')!.textContent = selectedDate || '尚未限定日期'
       root.querySelector('[data-status]')!.textContent = `${selectedDate || '全部日期'} · 找到 ${count} 篇文字`
       root.querySelector<HTMLElement>('[data-empty]')!.hidden = count > 0
     }
@@ -97,20 +108,39 @@ function setupExplorers() {
         button.textContent = String(d)
         button.disabled = count === 0
         button.classList.toggle('has-stories', count > 0)
+        const now = new Date()
+        if (date === `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`)
+          button.setAttribute('aria-current', 'date')
         button.setAttribute('aria-label', `${date}，${count} 篇文章`)
         button.setAttribute('aria-pressed', String(selectedDate === date))
         button.addEventListener('click', () => {
           selectedDate = selectedDate === date ? '' : date
           drawCalendar()
           apply()
+          closeCalendar()
         })
         days.append(button)
       }
     }
     toggle.addEventListener('click', () => {
-      calendar.hidden = !calendar.hidden
-      toggle.setAttribute('aria-expanded', String(!calendar.hidden))
+      calendar.showModal()
+      document.documentElement.classList.add('calendar-open')
+      toggle.setAttribute('aria-expanded', 'true')
     })
+    calendar.addEventListener('close', () => {
+      document.documentElement.classList.remove('calendar-open')
+      toggle.setAttribute('aria-expanded', 'false')
+      toggle.focus()
+    })
+    calendar.addEventListener('click', (event) => {
+      const bounds = calendar.getBoundingClientRect()
+      if (event.target === calendar && (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom))
+        closeCalendar()
+    })
+    root.querySelector('[data-close-calendar]')!.addEventListener('click', closeCalendar)
+    document.addEventListener('astro:before-swap', () => {
+      document.documentElement.classList.remove('calendar-open')
+    }, { once: true })
     form.addEventListener('input', apply)
     form.addEventListener('reset', () => {
       selectedDate = ''
@@ -124,6 +154,7 @@ function setupExplorers() {
       selectedDate = ''
       drawCalendar()
       apply()
+      closeCalendar()
     })
     for (const [selector, delta] of [['[data-prev]', -1], ['[data-next]', 1]] as const) {
       root.querySelector(selector)!.addEventListener('click', () => {
