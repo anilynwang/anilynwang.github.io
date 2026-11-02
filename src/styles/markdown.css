@@ -6,18 +6,19 @@
 
 /* Global Styles */
 .heti {
-  --at-apply: 'break-words hyphens-auto cjk:tracking-wide';
+  --at-apply: 'break-words hyphens-auto';
   font-size: 1.125rem;
   font-weight: 400;
-  line-height: 1.85;
+  line-height: 1.78;
+  letter-spacing: 0.015em;
 }
 
 /* Customized Post Title */
 .heti .post-title {
-  --at-apply: 'mb-2 mt-0 tracking-tight';
-  font-size: 2.25rem;
+  --at-apply: 'mb-3 mt-0 tracking-tight';
+  font-size: clamp(2.15rem, 4vw, 2.75rem);
   font-weight: 500;
-  line-height: 1.3;
+  line-height: 1.25;
 }
 
 /* Headings */
@@ -57,12 +58,8 @@
 
 /* Paragraphs */
 .heti :where(p:not(.no-heti):not(.no-heti *)) {
-  --at-apply: 'mb-4 text-pretty cjk:text-justify';
-}
-
-/* Indent prose paragraphs without changing the article text. */
-#post-content > p:not(:has(img, picture, video)) {
-  text-indent: 2em;
+  --at-apply: 'mb-5 cjk:text-justify';
+  text-wrap: wrap;
 }
 
 /* Links */

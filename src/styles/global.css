@@ -43,6 +43,55 @@ html.dark {
 .post-list .heti {
   color: var(--ink-light);
 }
+.archive-section {
+  margin-bottom: 2.75rem;
+}
+.archive-year {
+  margin: 0 0 0.75rem;
+  padding-bottom: 0.65rem;
+  border-bottom: 1px solid oklch(var(--un-preset-theme-colors-secondary) / 0.22);
+  color: var(--ink-light);
+  font-family: 'Source Han Serif CN', serif;
+  font-size: 0.82rem;
+  letter-spacing: 0.08em;
+}
+.post-entry {
+  padding: 1.25rem 0 1.45rem;
+  border-bottom: 1px solid oklch(var(--un-preset-theme-colors-secondary) / 0.11);
+}
+.post-entry-title {
+  display: block;
+  color: var(--ink-very-dark);
+  font-size: clamp(1.2rem, 2vw, 1.4rem);
+  font-weight: 500;
+  line-height: 1.4;
+}
+.post-entry-meta {
+  margin-top: 0.45rem;
+  color: var(--ink-light);
+  font-size: 0.82rem;
+}
+.post-entry-excerpt {
+  margin-top: 0.75rem;
+  color: var(--ink-light);
+  font-size: 0.96rem;
+  line-height: 1.7;
+  letter-spacing: 0.01em;
+}
+.post-entry-excerpt p {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+@media (max-width: 640px) {
+  .post-entry {
+    padding: 1.1rem 0 1.2rem;
+  }
+  .post-entry-excerpt {
+    font-size: 0.91rem;
+  }
+}
 .tag-list a {
   color: var(--ink-light);
 }

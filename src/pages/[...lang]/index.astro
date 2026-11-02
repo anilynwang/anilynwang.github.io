@@ -26,16 +26,16 @@ const postsByYear = await getPostsByYear(currentLang)
   )}
   <!-- Pinned Posts -->
   {pinnedPosts.length > 0 && (
-    <section class="mb-7.5">
-      <div class="uno-decorative-line" />
+    <section class="archive-section">
+      <p class="archive-year">置顶</p>
       <PostList posts={pinnedPosts} lang={currentLang} pinned={true} />
     </section>
   )}
 
   <!-- Regular Posts -->
-  {Array.from(postsByYear.entries(), ([_year, posts]) => (
-    <section class="mb-7.5">
-      <div class="uno-decorative-line" />
+  {Array.from(postsByYear.entries(), ([year, posts]) => (
+    <section class="archive-section">
+      <p class="archive-year">{year}</p>
       <PostList posts={posts} lang={currentLang} />
     </section>
   ))}
