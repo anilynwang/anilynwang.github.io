@@ -46,7 +46,7 @@ const tags = [...new Set(posts.flatMap(p => p.data.tags))].sort()
       return (
 <article class="paper-story" data-story data-date={date} data-author={author} data-genre={genre} data-tags={JSON.stringify(post.data.tags)} data-search={[post.data.title, author, genre, ...post.data.tags, post.body || ''].join(' ').toLocaleLowerCase()}>
         <a class="story-link" href={getPostPath(post.data.abbrlink || post.id, lang)} aria-labelledby={`story-title-${i}`}>
-        <div class="story-section"><span>{post.data.recommended ? <span class="recommend-mark">作者推荐</span> : genre}</span><span>{String(i + 1).padStart(2, '0')}</span></div>
+        <div class="story-section"><span>{post.data.recommended ? <span class="recommend-mark">作者推荐</span> : genre}</span></div>
         <h2 id={`story-title-${i}`}>{post.data.title}</h2>
         <p class="story-byline">{author} <span>／</span> <time datetime={date}>{date}</time></p>
         <p class="story-excerpt">{getPostDescription(post, 'list')}</p>
@@ -70,7 +70,8 @@ function setupExplorers() {
     const month = root.querySelector<HTMLInputElement>('[data-month]')!
     const days = root.querySelector<HTMLElement>('[data-days]')!
     let selectedDate = ''
-    month.value = stories.map(s => s.dataset.date!).sort().at(-1)?.slice(0, 7) || new Date().toISOString().slice(0, 7)
+    const initialMonth = stories.map(s => s.dataset.date!).sort().at(-1)?.slice(0, 7) || new Date().toISOString().slice(0, 7)
+    month.value = initialMonth
     const control = (name: string) => form.elements.namedItem(name) as HTMLInputElement | HTMLSelectElement
     function closeCalendar() {
       calendar.close()
@@ -95,7 +96,7 @@ function setupExplorers() {
     }
     function drawCalendar() {
       days.replaceChildren()
-      const [year, m] = month.value.split('-').map(Number)
+      const [year, m] = (month.value || initialMonth).split('-').map(Number)
       if (!year || !m)
         return
       const offset = (new Date(year, m - 1, 1).getDay() + 6) % 7
@@ -144,12 +145,17 @@ function setupExplorers() {
     form.addEventListener('input', apply)
     form.addEventListener('reset', () => {
       selectedDate = ''
+      month.value = initialMonth
       setTimeout(() => {
         drawCalendar()
         apply()
       }, 0)
     })
-    month.addEventListener('change', drawCalendar)
+    month.addEventListener('change', () => {
+      if (!month.value)
+        month.value = initialMonth
+      drawCalendar()
+    })
     root.querySelector('[data-clear-date]')!.addEventListener('click', () => {
       selectedDate = ''
       drawCalendar()
@@ -158,7 +164,7 @@ function setupExplorers() {
     })
     for (const [selector, delta] of [['[data-prev]', -1], ['[data-next]', 1]] as const) {
       root.querySelector(selector)!.addEventListener('click', () => {
-        const [y, m] = month.value.split('-').map(Number)
+        const [y, m] = (month.value || initialMonth).split('-').map(Number)
         const next = new Date(y, m - 1 + delta, 1)
         month.value = `${next.getFullYear()}-${String(next.getMonth() + 1).padStart(2, '0')}`
         drawCalendar()
