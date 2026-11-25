@@ -2,7 +2,7 @@
 import { themeConfig } from '@/config'
 import { getPageInfo } from '@/utils/page'
 
-const { isHome, getLocalizedPath } = getPageInfo(Astro.url.pathname)
+const { isHome, isAbout, getLocalizedPath } = getPageInfo(Astro.url.pathname)
 const { title, subtitle } = themeConfig.site
 ---
 <header class:list={[isHome ? 'paper-masthead' : 'reading-masthead lg:(uno-desktop-column top-21) mb-10']}>
@@ -19,7 +19,13 @@ const { title, subtitle } = themeConfig.site
     <>
       <a id="site-title-link" class="reading-brand" href={getLocalizedPath('/')}>{title}</a>
       <p class="reading-subtitle">{subtitle}</p>
-      <a class="about-button reading-about" href={getLocalizedPath('/about/')}>关于 <span aria-hidden="true">↗</span></a>
+      {isAbout
+? (
+        <a class="about-button reading-about" href={getLocalizedPath('/')}>返回首页</a>
+      )
+: (
+        <a class="about-button reading-about" href={getLocalizedPath('/about/')}>关于 <span aria-hidden="true">↗</span></a>
+      )}
     </>
   )}
 </header>
